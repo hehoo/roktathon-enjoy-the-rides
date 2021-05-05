@@ -8,10 +8,12 @@ app.use('/mobile', express.static(__dirname + '/public/mobile'));
 
 io.on('connection', function(socket){
     socket.on('mobile connected', function(){
+      console.log('Mobile connected');
       io.emit('start')
     })
 
     socket.on('orientation', function(e){
+      console.log('Orientation change');
       io.emit('mobile orientation', e);
     })
 })

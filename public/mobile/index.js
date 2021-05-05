@@ -12,11 +12,19 @@ window.onload = function(){
             }
         }
 
-        window.addEventListener("deviceorientation", handleOrientation, true);
+        function getAcceleratorPermission()  {
+          DeviceMotionEvent.requestPermission().then(response => {
+            if (response == 'granted') {
+              window.addEventListener("deviceorientation", handleOrientation, true);
+            }
+          });
+        }
+
         button.addEventListener('click', enableNoSleep, false);
 
         function enableNoSleep() {
             socket.emit('mobile connected');
+            getAcceleratorPermission();
             socket.on('start', () => ready = true)
             noSleep.enable();
             button.removeEventListener('touchstart', enableNoSleep, false);
